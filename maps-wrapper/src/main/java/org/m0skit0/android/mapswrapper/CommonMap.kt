@@ -9,10 +9,10 @@ import org.m0skit0.android.mapswrapper.model.*
 
 class CommonMap(private val map: Any) {
 
-    private val google: GoogleMap
+    val google: GoogleMap
         get() = map as GoogleMap
 
-    private val huawei: HuaweiMap
+    val huawei: HuaweiMap
         get() = map as HuaweiMap
 
     var mapType: Int
@@ -95,9 +95,9 @@ class CommonMap(private val map: Any) {
             )
         }
 
-    private fun isGoogle(): Boolean = map is GoogleMap
+    fun isGoogle(): Boolean = map is GoogleMap
 
-    private fun isHuawei(): Boolean = map is HuaweiMap
+    fun isHuawei(): Boolean = map is HuaweiMap
 
     private inline fun <T> googleOrHuawei(google: GoogleMap.() -> T, huawei: HuaweiMap.() -> T): T =
         when {
@@ -114,6 +114,13 @@ class CommonMap(private val map: Any) {
         googleOrHuawei(
             { cameraUpdate.google?.let { moveCamera(it) } },
             { moveCamera(cameraUpdate.huawei) }
+        )
+    }
+
+    fun setMapStyle(options: MapStyleOptions) {
+        googleOrHuawei(
+            { setMapStyle(options.google) },
+            { setMapStyle(options.huawei) }
         )
     }
 
@@ -498,7 +505,7 @@ class CommonMap(private val map: Any) {
         googleOrHuawei(
             { setOnCameraChangeListener { listener.onCameraChange(it.asWrapper()) } },
             { setOnCameraIdleListener { listener.onCameraChange(cameraPosition.asWrapper()) } },
-        )
+            )
     }
 
     companion object {
@@ -509,19 +516,23 @@ class CommonMap(private val map: Any) {
         const val MAP_TYPE_HYBRID = GoogleMap.MAP_TYPE_HYBRID
     }
 
-    fun interface OnMapClickListener {
+    fun
+    interface OnMapClickListener {
         fun onMapClick(position: LatLng)
     }
 
-    fun interface OnMapLongClickListener {
+    fun
+    interface OnMapLongClickListener {
         fun onMapLongClick(position: LatLng)
     }
 
-    fun interface OnCameraChangeListener {
+    fun
+    interface OnCameraChangeListener {
         fun onCameraChange(position: CameraPosition)
     }
 
-    fun interface OnCameraMoveStartedListener {
+    fun
+    interface OnCameraMoveStartedListener {
 
         fun onCameraMoveStarted(reason: Int)
 
@@ -532,15 +543,18 @@ class CommonMap(private val map: Any) {
         }
     }
 
-    fun interface OnCameraMoveListener {
+    fun
+    interface OnCameraMoveListener {
         fun onCameraMove()
     }
 
-    fun interface OnCameraMoveCanceledListener {
+    fun
+    interface OnCameraMoveCanceledListener {
         fun onCameraMoveCanceled()
     }
 
-    fun interface OnCameraIdleListener {
+    fun
+    interface OnCameraIdleListener {
         fun onCameraIdle()
     }
 
@@ -555,23 +569,28 @@ class CommonMap(private val map: Any) {
         fun onMarkerDragEnd(marker: Marker)
     }
 
-    fun interface OnCircleClickListener {
+    fun
+    interface OnCircleClickListener {
         fun onCircleClick(circle: Circle)
     }
 
-    fun interface OnMarkerClickListener {
+    fun
+    interface OnMarkerClickListener {
         fun onMarkerClick(marker: Marker?): Boolean
     }
 
-    fun interface OnInfoWindowCloseListener {
+    fun
+    interface OnInfoWindowCloseListener {
         fun onInfoWindowClose(marker: Marker)
     }
 
-    fun interface OnInfoWindowLongClickListener {
+    fun
+    interface OnInfoWindowLongClickListener {
         fun onInfoWindowLongClick(marker: Marker)
     }
 
-    fun interface OnInfoWindowClickListener {
+    fun
+    interface OnInfoWindowClickListener {
         fun onInfoWindowClick(marker: Marker)
     }
 
@@ -580,27 +599,33 @@ class CommonMap(private val map: Any) {
         fun getInfoContents(marker: Marker): View?
     }
 
-    fun interface OnPolygonClickListener {
+    fun
+    interface OnPolygonClickListener {
         fun onPolygonClick(polygon: Polygon)
     }
 
-    fun interface OnPolylineClickListener {
+    fun
+    interface OnPolylineClickListener {
         fun onPolylineClick(polyline: Polyline)
     }
 
-    fun interface OnGroundOverlayClickListener {
+    fun
+    interface OnGroundOverlayClickListener {
         fun onGroundOverlayClick(groundOverlay: GroundOverlay)
     }
 
-    fun interface OnMapLoadedCallback {
+    fun
+    interface OnMapLoadedCallback {
         fun onMapLoaded()
     }
 
-    fun interface OnMyLocationButtonClickListener {
+    fun
+    interface OnMyLocationButtonClickListener {
         fun onMyLocationButtonClick()
     }
 
-    fun interface OnMyLocationClickListener {
+    fun
+    interface OnMyLocationClickListener {
         fun onMyLocationClick(location: Location)
     }
 }
